@@ -22,4 +22,4 @@ Thumbs.db
 # Ignorar dependencias instaladas
 node_modules/
 
-backup-local/
+
