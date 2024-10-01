@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main page - DAI Store</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <div class="container my-4"></div>
+    <div class="header bg-success text-white text-center py-4">
+        <h1>Welcome to Raúl's DAI Store!</h1>
+    </div>
+
+    <div class="form-group d-flex justify-content-center align-items-center" style="padding: 0 20px;">
+        <div class="input-group" style="width: 250px; margin-right: 10px;">
+            <input type="text" class="form-control" placeholder="Search Products..." id="seacherInput" />
+            <div class="input-group-append">
+                <button class="btn btn-success" onclick="searchProducts()">Search</button>
+            </div>
+        </div>
+
+        <div class="mr-2" style="min-width: 150px;">
+            <label for="categorias" class="sr-only">Categorías:</label>
+            <select id="categorias" name="categorias" class="form-control" onchange="filterByCategory()">
+                <option value="">All categories</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria }}">{{ categoria }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex">
+            <button class="btn btn-primary mr-2">Orders</button>
+            <button class="btn btn-danger">Logout</button>
+        </div>
+    </div>
+
+
+    <h2>Our products:</h2>
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-4 mb-4">
+            <div class="producto card h-100">
+                <img src="{{ producto.image }}" alt="{{ producto.nombre }}" class="card-img-top" />
+                <div class="card-body">
+                    <h2 class="card-title">{{ producto.title }}</h2>
+                    <h3 class="card-subtitle mb-2 text-muted">{{ producto.category }}</h3>
+                    <p class="card-text">{{ producto.description }}</p>
+                    <p class="precio font-weight-bold text-success">Precio: {{ producto.price }} €</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+
+    <div class="footer bg-success text-white text-center py-2">
+        <p>Raúl Ramírez Abril - DAI 2024</p>
+    </div>
+
+    <script src="/js/portada.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

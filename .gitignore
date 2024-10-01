@@ -1,0 +1,23 @@
+# Ignorar la carpeta 'data' de MongoDB
+data/
+
+# Ignorar archivos de imágenes
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+
+# Ignorar archivos temporales y del sistema
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de entorno
+.env
+
+# Ignorar dependencias instaladas
+node_modules/
