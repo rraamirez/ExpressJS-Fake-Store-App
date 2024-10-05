@@ -7,7 +7,7 @@ const router = express.Router();
       
 router.get('/portada', async (req, res) => {
   try {
-    const productos = await Productos.find({}); // Todos los productos
+    const productos = await Productos.find({});
     const categorias = [...new Set(productos.map(producto => producto.category))];
     res.render('portada.html', { productos, categorias });
   } catch (err) {
@@ -15,6 +15,13 @@ router.get('/portada', async (req, res) => {
   }
 });
 
-// ... más rutas aquí
+router.get('/api/productos', async (req, res) => {
+  try {
+      const productos = await Productos.find({});
+      res.json(productos);
+  } catch (err) {
+      res.status(500).send({ err });
+  }
+});
 
 export default router
