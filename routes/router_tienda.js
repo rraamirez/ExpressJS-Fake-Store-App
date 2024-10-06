@@ -15,6 +15,16 @@ router.get('/portada', async (req, res) => {
   }
 });
 
+router.get('/base', async (req, res) => {
+  try {
+    const productos = await Productos.find({});
+    const categorias = [...new Set(productos.map(producto => producto.category))];
+    res.render('base.html', { productos, categorias });
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
 router.get('/api/productos', async (req, res) => {
   try {
       const productos = await Productos.find({});
