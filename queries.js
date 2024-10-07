@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 
-dotenv.config(); //loads environment variables from the .env file
+dotenv.config(); //for loading environment variables from the .env file
 
 const USER_DB = process.env.USER_DB;
 const PASS = process.env.PASS;
@@ -40,7 +40,7 @@ async function getWinterProductsSortedByPrice() {
     const products = await db
       .collection("productos")
       .find({ description: { $regex: /winter/i } })
-      .sort({ price: 1 })  //descent way: -1
+      .sort({ price: 1 })  //si quieres que sea descendente: -1
       .toArray();
 
     console.log(products.length + " winter products found:");
@@ -55,7 +55,7 @@ async function getWinterProductsSortedByPrice() {
   }
 }
 
-async function getJeweleryProductsSortedByPrice() {
+async function getJeweleryProductsSortedByRating() {
   try {
     await client.connect();
     const db = client.db(dbName);
@@ -63,13 +63,22 @@ async function getJeweleryProductsSortedByPrice() {
     const products = await db
       .collection("productos")
       .find({ category: "jewelery" })
-      .sort({ price: 1 })
       .toArray();
+
+    for(let i = 0; i < products.length; i++) {
+      for(let j = i + 1; j < products.length; j++) {
+        if(products[i].rating.rate < products[j].rating.rate) {
+          const aux = products[i];
+          products[i] = products[j];
+          products[j] = aux;
+        }
+      }
+    }
 
     console.log(products.length + " jewelry products found:");
     for (let i = 0; i < products.length; i++) {
       const producto = products[i];
-      console.log("Product: " + producto.title + ", Price: " + producto.price + " $");
+      console.log("Product: " + producto.title + ", Rating: " + producto.rating.rate);
     }
   } catch (err) {
     console.error("Error fetching products:", err);
@@ -83,7 +92,7 @@ async function getTotalReviews() {
     await client.connect();
     const db = client.db(dbName);
 
-    const products = await db.collection("productos").find({}).toArray();
+    const products = await db.collection("productos").find().toArray();
 
     let totalReviews = 0;
     for (let i = 0; i < products.length; i++) {
@@ -137,6 +146,7 @@ async function getUsersWithoutDigitsInPassword() {
     const db = client.db(dbName);
 
     //not operator que invierte consulta en mongo, y la d es el regex que representa un digito
+    //https://stackoverflow.com/questions/9184106/javascript-regular-expression-non-digit-character
     const users = await db
       .collection("usuarios")
       .find({ password: { $not: /\d/ } })
@@ -154,12 +164,17 @@ async function getUsersWithoutDigitsInPassword() {
   }
 }
 
-getExpensiveProducts();
-// getWinterProductsSortedByPrice();
-// getJeweleryProductsSortedByPrice();
-// getTotalReviews();
-// getAverageScoreByCategory();
-// getUsersWithoutDigitsInPassword();
+await getExpensiveProducts();
+console.log("\n");
+await getWinterProductsSortedByPrice();
+console.log("\n");
+await getJeweleryProductsSortedByRating();
+console.log("\n");
+await getTotalReviews();
+console.log("\n");
+await getAverageScoreByCategory();
+console.log("\n");
+await getUsersWithoutDigitsInPassword();
 
 /*
 Mongodump: 
