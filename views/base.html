@@ -3,7 +3,10 @@
   <head>
     {% block head %}
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -16,26 +19,44 @@
       <div class="container text-center">
         {% block header %}
         <h1 class="mb-4">Welcome To Raul's DAI Store!</h1>
-        <div class="d-inline-block mb-3">
-          <select
-            id="categorias"
-            name="categorias"
-            class="form-control"
-            onchange="filterByCategory()"
-          >
-            <option value="">All categories</option>
-            {% for categoria in categorias %}
-            <option value="{{ categoria }}">{{ categoria }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="d-inline-block ml-3">
-          <button class="btn btn-primary mr-2">Orders</button>
-          <button class="btn btn-danger">Logout</button>
+        <div class="row justify-content-center align-items-center">
+          <div class="col-auto">
+            <div class="input-group mb-3" style="width: 250px;">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search Products..."
+                id="seacherInput"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-success" onclick="searchProducts()">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <select
+              id="categorias"
+              name="categorias"
+              class="form-control mb-3"
+              onchange="filterByCategory()"
+            >
+              <option value="">All categories</option>
+              {% for categoria in categorias %}
+              <option value="{{ categoria }}">{{ categoria }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-primary mr-2">Orders</button>
+            <button class="btn btn-danger">Logout</button>
+          </div>
         </div>
         {% endblock %}
       </div>
     </header>
+    
 
     <main class="container">
       {% block content %}{% endblock %}
@@ -45,7 +66,11 @@
           <div class="card h-100">
             <div class="card-body text-center">
               <h3 class="cat">{{ categoria }}</h3>
-              <a href="/portada" class="btn btn-outline-primary btn-block mt-3">View</a>
+              <a
+                href="/portada/{{ categoria }}"
+                class="btn btn-outline-primary btn-block mt-3"
+                >View</a
+              >
             </div>
           </div>
         </div>
@@ -54,12 +79,11 @@
     </main>
 
     <footer class="bg-light text-center py-3 mt-5">
-      {% block footer %}
-      &copy; Copyright 2008 by
-      <a href="http://domain.invalid/">you</a>.
-      {% endblock %}
+      {% block footer %} &copy; Copyright 2008 by
+      <a href="http://domain.invalid/">you</a>. {% endblock %}
     </footer>
 
+    <script src="/js/baseScripts.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

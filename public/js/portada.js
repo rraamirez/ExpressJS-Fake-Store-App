@@ -7,15 +7,15 @@ async function fetchProducts() {
         }
         const data = await response.json();
         productos.push(...data);
-        renderProducts(productos); // Renderiza todos los productos al cargar
+        renderProducts(productos); 
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
 function renderProducts(products) {
-    const productosContainer = document.querySelector('.row'); // Contenedor de los productos
-    productosContainer.innerHTML = ''; // Limpia el contenedor
+    const productosContainer = document.querySelector('.row'); 
+    productosContainer.innerHTML = ''; 
 
     products.forEach(producto => {
         const productCard = `
@@ -31,7 +31,7 @@ function renderProducts(products) {
                 </div>
             </div>
         `;
-        productosContainer.insertAdjacentHTML('beforeend', productCard); // Añade cada producto al contenedor
+        productosContainer.insertAdjacentHTML('beforeend', productCard); 
     });
 }
 
@@ -40,19 +40,20 @@ function searchProducts() {
     const filteredProducts = productos.filter(producto =>
         producto.title.toLowerCase().includes(input)
     );
-    renderProducts(filteredProducts); // Renderiza solo los productos filtrados
-}
-
-function filterByCategory() {
-    const selectedCategory = document.getElementById('categorias').value;
-    const filteredProducts = productos.filter(producto =>
-        producto.category === selectedCategory || selectedCategory === ""
-    );
     renderProducts(filteredProducts); 
 }
 
+function filterByCategory() {
+    const categoria = document.getElementById('categorias').value;
+    if (categoria) {
+        window.location.href = `/portada/${categoria}`; 
+    } else {
+        window.location.href = '/portada'; 
+    }
+}
+
 window.onload = () => {
-    fetchProducts();
-    document.querySelector('.btn-success').addEventListener('click', searchProducts);
+    //todo look at code on the master branch
+    //document.querySelector('.btn-success').addEventListener('click', searchProducts);
     document.getElementById('categorias').addEventListener('change', filterByCategory);
 };

@@ -10,35 +10,49 @@
 </head>
 
 <body>
-    <div class="container my-4"></div>
-    <div class="header bg-success text-white text-center py-4">
-        <h1>Welcome to Raúl's DAI Store!</h1>
-    </div>
-
-    <div class="form-group d-flex justify-content-center align-items-center" style="padding: 0 20px;">
-        <div class="input-group" style="width: 250px; margin-right: 10px;">
-            <input type="text" class="form-control" placeholder="Search Products..." id="seacherInput" />
-            <div class="input-group-append">
-                <button class="btn btn-success" onclick="searchProducts()">Search</button>
+    <header class="bg-dark text-white py-4 mb-4">
+        <div class="container text-center">
+          {% block header %}
+          <h1 class="mb-4">Welcome To Raul's DAI Store!</h1>
+          <div class="row justify-content-center align-items-center">
+            <div class="col-auto">
+              <div class="input-group mb-3" style="width: 250px;">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search Products..."
+                  id="seacherInput"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-success" onclick="searchProducts()">
+                    Search
+                  </button>
+                </div>
+              </div>
             </div>
-        </div>
-
-        <div class="mr-2" style="min-width: 150px;">
-            <label for="categorias" class="sr-only">Categorías:</label>
-            <select id="categorias" name="categorias" class="form-control" onchange="filterByCategory()">
+            <div class="col-auto">
+              <select
+                id="categorias"
+                name="categorias"
+                class="form-control mb-3"
+                onchange="filterByCategory()"
+              >
                 <option value="">All categories</option>
                 {% for categoria in categorias %}
                 <option value="{{ categoria }}">{{ categoria }}</option>
                 {% endfor %}
-            </select>
+              </select>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary mr-2">Orders</button>
+              <button class="btn btn-danger">Logout</button>
+            </div>
+          </div>
+          {% endblock %}
         </div>
-
-        <div class="d-flex">
-            <button class="btn btn-primary mr-2">Orders</button>
-            <button class="btn btn-danger">Logout</button>
-        </div>
-    </div>
-
+      </header>
+      
+        
     <h2>Our products:</h2>
     <div class="row">
         {% for producto in productos %}

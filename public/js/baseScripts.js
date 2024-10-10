@@ -1,0 +1,7 @@
+function filterByCategory() {
+
+}
+
+function searchProducts() {
+
+}
