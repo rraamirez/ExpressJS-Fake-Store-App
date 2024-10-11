@@ -1,83 +1,30 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main page - DAI Store</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-</head>
+{% block title %}Welcome to DAI Store{% endblock %}
 
-<body>
-    <header class="bg-dark text-white py-4 mb-4">
-        <div class="container text-center">
-          {% block header %}
-          <h1 class="mb-4">Welcome To Raul's DAI Store!</h1>
-          <div class="row justify-content-center align-items-center">
-            <div class="col-auto">
-              <div class="input-group mb-3" style="width: 250px;">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search Products..."
-                  id="seacherInput"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-success" onclick="searchProducts()">
-                    Search
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-auto">
-              <select
-                id="categorias"
-                name="categorias"
-                class="form-control mb-3"
-                onchange="filterByCategory()"
-              >
-                <option value="">All categories</option>
-                {% for categoria in categorias %}
-                <option value="{{ categoria }}">{{ categoria }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="col-auto">
-              <button class="btn btn-primary mr-2">Orders</button>
-              <button class="btn btn-danger">Logout</button>
-            </div>
+{% block content %}
+<div class="container">
+  <h2 class="my-4">Browse Categories</h2>
+
+  <!-- Mostrar las categorías disponibles -->
+  <div class="row">
+    {% if categorias.length > 0 %}
+      {% for categoria in categorias %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <h3 class="cat">{{ categoria }}</h3>
+            <!-- Enlace para ver los productos de la categoría seleccionada -->
+            <a href="/categorias/{{ categoria }}" class="btn btn-outline-primary btn-block mt-3">
+              View Products
+            </a>
           </div>
-          {% endblock %}
         </div>
-      </header>
-      
-        
-    <h2>Our products:</h2>
-    <div class="row">
-        {% for producto in productos %}
-        <div class="col-md-4 mb-4">
-            <div class="producto card h-100">
-                <img src="{{ producto.image }}" alt="{{ producto.nombre }}" class="card-img-top" />
-                <div class="card-body">
-                    <h2 class="card-title">{{ producto.title }}</h2>
-                    <h3 class="card-subtitle mb-2 text-muted">{{ producto.category }}</h3>
-                    <p class="card-text">{{ producto.description }}</p>
-                    <p class="precio font-weight-bold text-success">Precio: {{ producto.price }} €</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div class="footer bg-success text-white text-center py-2">
-        <p>Raúl Ramírez Abril - DAI 2024</p>
-    </div>
-
-    <script src="/js/portada.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p>No categories found.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

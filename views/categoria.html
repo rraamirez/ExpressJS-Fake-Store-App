@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ categoria }} Products{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="my-4">Products in "{{ categoria }}"</h2>
+  <div class="row">
+    {% if productos.length > 0 %}
+      {% for producto in productos %}
+      <div class="col-md-4 mb-4">
+        <div class="producto card h-100">
+          <img src="{{ producto.image }}" alt="{{ producto.title }}" class="card-img-top" />
+          <div class="card-body">
+            <h2 class="card-title">{{ producto.title }}</h2>
+            <h5 class="card-subtitle text-muted">{{ producto.category }}</h5>
+            <p class="card-text">{{ producto.description }}</p>
+            <p class="font-weight-bold text-success">Price: {{ producto.price }} €</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p>No products found in the "{{ categoria }}" category.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/categoria.js"></script> 
+{% endblock %}

@@ -18,10 +18,14 @@
     <header class="bg-dark text-white py-4 mb-4">
       <div class="container text-center">
         {% block header %}
-        <h1 class="mb-4">Welcome To Raul's DAI Store!</h1>
+        <h1 class="mb-4">
+          <a href="/" class="text-white text-decoration-none"
+            >Welcome To Raul's DAI Store!</a
+          >
+        </h1>
         <div class="row justify-content-center align-items-center">
           <div class="col-auto">
-            <div class="input-group mb-3" style="width: 250px;">
+            <div class="input-group mb-3" style="width: 250px">
               <input
                 type="text"
                 class="form-control"
@@ -40,50 +44,33 @@
               id="categorias"
               name="categorias"
               class="form-control mb-3"
-              onchange="filterByCategory()"
+              onchange="redirectToCategory()"
             >
               <option value="">All categories</option>
               {% for categoria in categorias %}
-              <option value="{{ categoria }}">{{ categoria }}</option>
+              <option value="{{ categoria }}">
+                {{ categoria }}
+              </option>
               {% endfor %}
             </select>
           </div>
           <div class="col-auto">
-            <button class="btn btn-primary mr-2">Orders</button>
-            <button class="btn btn-danger">Logout</button>
+            <button class="btn btn-primary mr-2 mb-3">Orders</button>
+            <button class="btn btn-danger mb-3">Logout</button>
           </div>
         </div>
         {% endblock %}
       </div>
     </header>
-    
 
-    <main class="container">
-      {% block content %}{% endblock %}
-      <div id="categorias-group" class="row">
-        {% for categoria in categorias %}
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-            <div class="card-body text-center">
-              <h3 class="cat">{{ categoria }}</h3>
-              <a
-                href="/portada/{{ categoria }}"
-                class="btn btn-outline-primary btn-block mt-3"
-                >View</a
-              >
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </main>
+    <main class="container">{% block content %}{% endblock %}</main>
 
     <footer class="bg-light text-center py-3 mt-5">
-      {% block footer %} &copy; Copyright 2008 by
-      <a href="http://domain.invalid/">you</a>. {% endblock %}
+      {% block footer %} &copy; Copyright 2024 by Raul. {% endblock %}
     </footer>
 
     <script src="/js/baseScripts.js"></script>
+    {% block scripts %}{% endblock %} 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

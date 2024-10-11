@@ -5,35 +5,42 @@ const router = express.Router();
 
 //esto es basicamente el controller
       
-router.get('/portada/:category', async (req, res) => {
-  const { category } = req.params; // obtener la categoría del parámetro de la URL
+router.get('/categorias/:categoria', async (req, res) => {
+  const { categoria } = req.params; 
   try {
-    const productos = await Productos.find(category ? { category } : {}); // filtrar por categoría si existe
-    console.log(productos);
-    const categorias = [...new Set(productos.map(producto => producto.category))];
-    res.render('portada.html', { productos, categorias });
-  } catch (err) {
-    res.status(500).send({ err });
+    const productos = await Productos.find({ category: categoria });
+    const categorias = [...new Set((await Productos.find()).map(producto => producto.category))];
+    res.render('categoria', { categoria, productos, categorias });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener productos');
   }
 });
 
-router.get('/base', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const productos = await Productos.find({});
     const categorias = [...new Set(productos.map(producto => producto.category))];
-    res.render('base.html', { productos, categorias });
+    res.render('portada', { categorias });
   } catch (err) {
     res.status(500).send({ err });
   }
 });
 
-router.get('/api/productos', async (req, res) => {
+router.get('/productos', async (req, res) => {
+  const searchTerm = req.query.search || ''; 
   try {
-      const productos = await Productos.find({});
-      res.json(productos);
+    const productos = await Productos.find({
+      title: { $regex: searchTerm, $options: 'i' } 
+    });
+    const categorias = [...new Set(productos.map(producto => producto.category))];
+    res.render('productos', { productos, categorias });
   } catch (err) {
-      res.status(500).send({ err });
+    res.status(500).send({ err });
   }
 });
+
+
+
 
 export default router
