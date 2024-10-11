@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+  </head>
+  <body>
+    <header class="bg-dark text-white py-4 mb-4">
+      <div class="container text-center">
+        {% block header %}
+        <h1 class="mb-4">
+          <a href="/" class="text-white text-decoration-none"
+            >Welcome To Raul's DAI Store!</a
+          >
+        </h1>
+        <div class="row justify-content-center align-items-center">
+          <div class="col-auto">
+            <div class="input-group mb-3" style="width: 250px">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search Products..."
+                id="seacherInput"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-success" onclick="searchProducts()">
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <select
+              id="categorias"
+              name="categorias"
+              class="form-control mb-3"
+              onchange="redirectToCategory()"
+            >
+              <option value="">All categories</option>
+              {% for categoria in categorias %}
+              <option value="{{ categoria }}">
+                {{ categoria }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-primary mr-2 mb-3">Orders</button>
+            <button class="btn btn-danger mb-3">Logout</button>
+          </div>
+        </div>
+        {% endblock %}
+      </div>
+    </header>
+
+    <main class="container">{% block content %}{% endblock %}</main>
+
+    <footer class="bg-light text-center py-3 mt-5">
+      {% block footer %} &copy; Copyright 2024 by Raul. {% endblock %}
+    </footer>
+
+    <script src="/js/baseScripts.js"></script>
+    {% block scripts %}{% endblock %} 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
