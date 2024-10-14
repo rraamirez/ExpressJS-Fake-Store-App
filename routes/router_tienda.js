@@ -40,6 +40,11 @@ router.get('/productos', async (req, res) => {
   }
 });
 
+router.get('/carrito', async (req, res) => {
+  res.render('carrito');
+});
+
+
 
 
 

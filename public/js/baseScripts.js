@@ -14,3 +14,7 @@ function redirectToCategory() {
       window.location.href = `/categorias/${selectedCategory}`;
     }
 }
+
+function redirectToMyCart() {
+  window.location.href = '/carrito';
+}

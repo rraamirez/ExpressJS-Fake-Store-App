@@ -8,13 +8,15 @@
       {% for producto in productos %}
       <div class="col-md-4 mb-4">
         <div class="producto card h-100">
-          <img src="{{ producto.image }}" alt="{{ producto.title }}" class="card-img-top" />
+          <img src="{{ producto.image }}" alt="{{ producto.title }}" class="card-img-top img-fluid" style="height: 300px;" />
           <div class="card-body">
             <h2 class="card-title">{{ producto.title }}</h2>
-            <h5 class="card-subtitle text-muted">{{ producto.category }}</h5>
-            <p class="card-text">{{ producto.description }}</p>
             <p class="font-weight-bold text-success">Price: {{ producto.price }} €</p>
           </div>
+          <div class="d d-flex justify-content-end mb-2 mx-2">
+            <button class="btn btn-success btn-sm me-3">View details</button>
+            <button class="btn btn-primary btn-sm ml-2">Add to cart</button>
+          </div>                           
         </div>
       </div>
       {% endfor %}
