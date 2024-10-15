@@ -18,3 +18,7 @@ function redirectToCategory() {
 function redirectToMyCart() {
   window.location.href = '/carrito';
 }
+
+function addToCart(){
+  
+}

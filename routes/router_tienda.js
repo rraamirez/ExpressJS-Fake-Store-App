@@ -27,8 +27,10 @@ router.get('/', async (req, res) => {
   }
 });
 
+//for searching products (recommended do with post insted of get and js?)
 router.get('/productos', async (req, res) => {
   const searchTerm = req.query.search || ''; 
+  console.log(searchTerm);
   try {
     const productos = await Productos.find({
       title: { $regex: searchTerm, $options: 'i' } 
@@ -40,7 +42,32 @@ router.get('/productos', async (req, res) => {
   }
 });
 
+router.post('/productos', async (req, res) => {
+  const searchTerm = req.body.search || ''; 
+  try {
+    const productos = await Productos.find({
+      title: { $regex: searchTerm, $options: 'i' } 
+    });
+    const categorias = [...new Set(productos.map(producto => producto.category))];
+    res.render('productos', { productos, categorias });
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
+
+router.get('/producto/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const producto = await Productos.findById(id);
+    res.render('producto', { producto });
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
 router.get('/carrito', async (req, res) => {
+  
   res.render('carrito');
 });
 
