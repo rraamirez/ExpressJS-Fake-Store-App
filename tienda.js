@@ -24,8 +24,8 @@ app.use(express.static('public'));     // directorio public para archivos
 app.use(express.urlencoded({ extended: true }));  // Para poder leer req.body
 app.use(session({
   secret: 'my-secret',      // cadena secreta para firmar la cookie de sesión
-  resave: false,            // no guardar la sesión si no ha sido modificada
-  saveUninitialized: false   // no crear sesión hasta que haya algo almacenado
+  resave: true,            // no guardar la sesión si no ha sido modificada
+  saveUninitialized: true   // no crear sesión hasta que haya algo almacenado
 }));
 
 // Ruta de prueba para el servidor

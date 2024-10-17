@@ -1,32 +1,41 @@
-{% extends "base.html" %}
-{% block title %}{{ categoria }} Products{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ categoria }} Products{% endblock
+%} {% block content %}
 <div class="container">
   <h2 class="my-4">Products in "{{ categoria }}"</h2>
   <div class="row">
-    {% if productos.length > 0 %}
-      {% for producto in productos %}
-      <div class="col-md-4 mb-4">
-        <div class="producto card h-100">
-          <img src="{{ producto.image }}" alt="{{ producto.title }}" class="card-img-top img-fluid" style="height: 300px;" />
-          <div class="card-body">
-            <h2 class="card-title">{{ producto.title }}</h2>
-            <p class="font-weight-bold text-success">Price: {{ producto.price }} €</p>
-          </div>
-          <div class="d d-flex justify-content-end mb-2 mx-2">
-            <a href="/producto/{{producto._id}}" class="btn btn-success btn-sm me-3">View details</a>
+    {% if productos.length > 0 %} {% for producto in productos %}
+    <div class="col-md-4 mb-4">
+      <div class="producto card h-100">
+        <img
+          src="{{ producto.image }}"
+          alt="{{ producto.title }}"
+          class="card-img-top img-fluid"
+          style="height: 300px"
+        />
+        <div class="card-body">
+          <h2 class="card-title">{{ producto.title }}</h2>
+          <p class="font-weight-bold text-success">
+            Price: {{ producto.price }} €
+          </p>
+        </div>
+        <div class="d d-flex justify-content-end mb-2 mx-2">
+          <a
+            href="/producto/{{producto._id}}"
+            class="btn btn-success btn-sm me-3"
+            >View details</a
+          >
+          <form action="/agregar-producto" method="POST">
+            <input type="hidden" name="id" value="{{ producto._id }}" />
             <button class="btn btn-primary btn-sm ml-2">Add to cart</button>
-          </div>                           
+          </form>
         </div>
       </div>
-      {% endfor %}
-    {% else %}
-      <p>No products found in the "{{ categoria }}" category.</p>
+    </div>
+    {% endfor %} {% else %}
+    <p>No products found in the "{{ categoria }}" category.</p>
     {% endif %}
   </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="/js/categoria.js"></script> 
+{% endblock %} {% block scripts %}
+<script src="/public/js/categoria.js"></script>
 {% endblock %}

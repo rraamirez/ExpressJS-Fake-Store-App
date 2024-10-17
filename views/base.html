@@ -44,14 +44,13 @@
                   type="text"
                   class="form-control"
                   placeholder="Search Products..."
-                  name="search"  
+                  name="search"
                 />
                 <div class="input-group-append">
-                  <button class="btn btn-success" type="submit">Search</button>  
+                  <button class="btn btn-success" type="submit">Search</button>
                 </div>
               </div>
             </form>
-          
           </div>
           <div class="col-auto">
             <select
@@ -62,15 +61,19 @@
             >
               <option value="">All categories</option>
               {% for categoria in categorias %}
-              <option value="{{ categoria }}">
-                {{ categoria }}
-              </option>
+              <option value="{{ categoria }}">{{ categoria }}</option>
               {% endfor %}
             </select>
           </div>
           <div class="col-auto">
-            <button class="btn btn-primary mr-2 mb-3" onclick="redirectToMyCart()">Orders</button>
-            <button class="btn btn-danger mb-3" >Logout</button>
+            <button
+              class="btn btn-primary mr-2 mb-3"
+              id="orders"
+              onclick="redirectToMyCart()"
+            >
+              Orders
+            </button>
+            <button class="btn btn-danger mb-3">Logout</button>
           </div>
         </div>
         {% endblock %}
@@ -84,7 +87,8 @@
     </footer>
 
     <script src="/js/baseScripts.js"></script>
-    {% block scripts %}{% endblock %} 
+    {% block scripts %}
+    {% endblock %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
