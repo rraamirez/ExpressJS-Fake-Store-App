@@ -6,7 +6,6 @@
 <div class="container">
   <h2 class="my-4">Browse Categories</h2>
 
-  <!-- Mostrar las categorías disponibles -->
   <div class="row">
     {% if categorias.length > 0 %}
       {% for categoria in categorias %}
@@ -14,7 +13,6 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <h3 class="cat">{{ categoria }}</h3>
-            <!-- Enlace para ver los productos de la categoría seleccionada -->
             <a href="/categorias/{{ categoria }}" class="btn btn-outline-primary btn-block mt-3">
               View Products
             </a>
