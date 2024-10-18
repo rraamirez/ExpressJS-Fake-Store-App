@@ -27,7 +27,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-//for searching products (recommended do with post insted of get and js?)
+//for searching products (recommended do with post instead of get and js?)
+//deprecated
 router.get('/productos', async (req, res) => {
   const searchTerm = req.query.search || ''; 
   try {
@@ -44,15 +45,21 @@ router.get('/productos', async (req, res) => {
 router.post('/productos', async (req, res) => {
   const searchTerm = req.body.search || ''; 
   try {
-    const productos = await Productos.find({
-      title: { $regex: searchTerm, $options: 'i' } 
+    const productosPromise = Productos.find({
+      title: { $regex: searchTerm, $options: 'i' }
     });
-    const categorias = [...new Set(productos.map(producto => producto.category))];
+    
+    const prodCatsPromise = Productos.find({});
+
+    const [productos, prodCats] = await Promise.all([productosPromise, prodCatsPromise]);
+    const categorias = [...new Set(prodCats.map(producto => producto.category))];
+
     res.render('productos', { productos, categorias });
   } catch (err) {
     res.status(500).send({ err });
   }
 });
+
 
 
 router.get('/producto/:id', async (req, res) => {
@@ -65,14 +72,19 @@ router.get('/producto/:id', async (req, res) => {
   }
 });
 
-router.get('/carrito', (req, res) => {
+router.get('/carrito', async (req, res) => {
   const productos = req.session.carrito || [];
   const total = productos.reduce((sum, product) => sum + product.price, 0);
   const numProducts = productos.length;
 
   console.log("Contenido del carrito:", productos);
   console.log("Total del carrito:", total);
-  res.render('carrito', { productos, total });
+
+
+  const prodCatsPromise = await Productos.find({});
+  const categorias = [...new Set(prodCatsPromise.map(product => product.category))];
+
+  res.render('carrito', { productos, total, categorias });
 });
 
 
