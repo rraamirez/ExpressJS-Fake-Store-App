@@ -1,6 +1,7 @@
 // ./model/productos.js
 import mongoose from "mongoose";
  
+//Schema
 const ProductosSchema = new mongoose.Schema({
     "id": {
         "type": "Number",
