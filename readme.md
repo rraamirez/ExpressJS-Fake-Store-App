@@ -33,4 +33,6 @@ Add to cart: Este boton es el encargado de añadir productos al carrito. Usa pos
 Puntos a destacar:
 
 Archivo baseScripts.js -> todo lo relacionado con javascript en frontend
-router_tienda.js -> el "backend" y el encargado de renderizar y dirigir páginas. Destacar el uso de llamadas asíncronas al interactuar con la bd debido a la naturaleza de javscript 
+router_tienda.js -> el "backend" y el encargado de renderizar y dirigir páginas. Destacar el uso de llamadas asíncronas al interactuar con la bd debido a la naturaleza de javscript.
+
+Uso de bootstrap para css.
