@@ -3,7 +3,7 @@ import express from "express";
 import Productos from "../model/productos.js";
 const router = express.Router();
 
-//this is just the controller (not res)
+//this is just the controller (not rest)
 
 router.get("/categorias/:categoria", async (req, res) => {
   const { categoria } = req.params;

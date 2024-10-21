@@ -1,4 +1,4 @@
-//this was for searching products with and then use get request to get the productsº
+//this was for searching products with and then use get request to get the products
 function searchProducts() {
     const input = document.getElementById('seacherInput').value.toLowerCase();
     window.location.href = `/productos?search=${encodeURIComponent(input)}`;
