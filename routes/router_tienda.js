@@ -85,9 +85,6 @@ router.get("/carrito", async (req, res) => {
   const productos = req.session.carrito || [];
   const total = productos.reduce((sum, product) => sum + product.price, 0);
 
-  console.log("Cart content:", productos);
-  console.log("Total:", total);
-
   const prodCatsPromise = await Productos.find({});
   const categorias = [ //ensoures no duplicates in categories and no categories lost
     ...new Set(prodCatsPromise.map((product) => product.category)),
@@ -104,7 +101,6 @@ router.post("/agregar-producto", async (req, res) => {
       req.session.carrito = [];
     }
     req.session.carrito.push(producto);
-    console.log("Carrito al agregar: ", req.session.carrito);
     res.redirect("/carrito");
   } catch (err) {
     res.status(500).send({ err });

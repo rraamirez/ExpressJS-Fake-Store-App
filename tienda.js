@@ -37,6 +37,11 @@ app.get("/hola", (req, res) => {
 import TiendaRouter from "./routes/router_tienda.js";
 app.use("/", TiendaRouter);
 
+import UsuariosRouter from "./routes/router_usuarios.js";
+app.use("/", UsuariosRouter);
+
+
+
 // Iniciar el servidor
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
