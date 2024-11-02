@@ -1,51 +1,44 @@
-// ./routes/router_tienda.js
 import express from "express";
-import Productos from "../model/productos.js";
-import jwt from "jsonwebtoken"; // Asegúrate de importar jwt
+import jwt from "jsonwebtoken"; 
+import Usuarios from "../model/usuarios.js"; // Asegúrate de importar el modelo correctamente
 const router = express.Router();
 
-// Para mostrar formulario de login
 router.get("/login", (req, res) => {
   res.render("login");
 });
 
-// Para recoger datos del formulario de login
+// Asegúrate de que esta función sea asíncrona
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  const usuario = await verificarUsuario(username, password);
+  // Aquí llamamos a la función de verificación
+  const usuario = await verificarUsuario(username, password); // Esto es válido ya que estamos en una función async
 
   if (usuario) {
     req.session.usuario = usuario; 
 
-    // Generar el token JWT
     const token = jwt.sign({ usuario: usuario.username }, process.env.SECRET_KEY);
 
-    // Establecer la cookie con el token
     res.cookie("access_token", token, {
       httpOnly: true,
-      secure: process.env.IN === 'production' // Asegúrate de que 'IN' esté bien configurado
-    });
-
-    const productos = await Productos.find({});
-    const categorias = [
-      ...new Set(productos.map((producto) => producto.category)),
-    ];
-    return res.render("portada", { usuario, productos, categorias });
+      secure: process.env.IN === 'production' 
+    }).redirect("/");
   } else {
-    return res.redirect("/login");
+    res.redirect("/login?error=1"); 
   }
 });
 
-// Función ficticia para verificar usuario
+// La función verificarUsuario debería seguir siendo asíncrona
 async function verificarUsuario(username, password) {
-  return true; // Implementa la lógica de autenticación real aquí
+  console.log("verificarUsuario", username, password);
+  const usuario = await Usuarios.findOne({ username: username, password: password });
+  return usuario ? { username: usuario.username } : null; 
 }
 
 router.get("/logout", (req, res) => {
-  req.session.usuario = null;
-  res.clearCookie("access_token"); // Asegúrate de limpiar la cookie al cerrar sesión
-  res.redirect("/login"); // Redirige a la página de login
+  req.session.destroy(); // Saca todas las sesiones
+  res.clearCookie("access_token"); 
+  res.redirect("/");
 });
 
 export default router;

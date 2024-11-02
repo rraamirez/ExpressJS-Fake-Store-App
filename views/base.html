@@ -1,3 +1,4 @@
+<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -39,19 +40,6 @@
         </h1>
         <div class="row justify-content-center align-items-center">
           <div class="col-auto">
-            <!-- <div class="input-group mb-3" style="width: 250px"> this filters tooo much better
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Search Products..."
-                id="seacherInput"
-              />
-              <div class="input-group-append">
-                <button class="btn btn-success" onclick="searchProducts()">
-                  Search
-                </button>
-              </div>
-            </div> -->
             <form action="/productos" method="POST">
               <div class="input-group mb-3" style="width: 250px">
                 <input
@@ -87,7 +75,7 @@
             >
               Orders
             </button>
-            {% if req.session.usuario %}
+            {% if usuario %}
             <button
               class="btn btn-danger mb-3"
               id="logout"
@@ -111,7 +99,6 @@
     <footer class="bg-light text-center py-3 mt-5 mb-0">
       {% block footer %} &copy; Copyright 2024 by Raul. {% endblock %}
     </footer>
-
     <script src="/js/baseScripts.js"></script>
     {% block scripts %} {% endblock %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
