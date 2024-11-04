@@ -1,0 +1,74 @@
+import mongoose from "mongoose";
+
+// Schema
+const UsuariosSchema = new mongoose.Schema({
+  "address": {
+    "geolocation": {
+      "lat": {
+        "type": "String",
+        "required": true
+      },
+      "long": {
+        "type": "String",
+        "required": true
+      }
+    },
+    "city": {
+      "type": "String",
+      "required": true
+    },
+    "street": {
+      "type": "String",
+      "required": true
+    },
+    "number": {
+      "type": "Number",
+      "required": true
+    },
+    "zipcode": {
+      "type": "String",
+      "required": true
+    }
+  },
+  "id": {
+    "type": "Number",
+    "unique": true
+  },
+  "email": {
+    "type": "String",
+    "required": true,
+    "unique": true
+  },
+  "username": {
+    "type": "String",
+    "required": true,
+    "unique": true
+  },
+  "password": {
+    "type": "String",
+    "required": true
+  },
+  "name": {
+    "firstname": {
+      "type": "String",
+      "required": true
+    },
+    "lastname": {
+      "type": "String",
+      "required": true
+    }
+  },
+  "phone": {
+    "type": "String",
+    "required": true
+  },
+  "admin": {
+    "type": "Boolean",
+    "default": false,
+    "required": false
+  }
+});
+
+// Modelo
+const Usuarios = mongoose.model("usuarios", UsuariosSchema);
+export default Usuarios;

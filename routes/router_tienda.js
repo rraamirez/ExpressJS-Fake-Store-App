@@ -3,8 +3,6 @@ import express from "express";
 import Productos from "../model/productos.js";
 const router = express.Router();
 
-//this is just the controller (not res)
-
 router.get("/categorias/:categoria", async (req, res) => {
   const { categoria } = req.params;
   try {
@@ -74,10 +72,61 @@ router.post("/productos", async (req, res) => {
 router.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    const usuario = req.session.usuario || null;
     const producto = await Productos.findById(id);
-    res.render("producto", { producto });
+    res.render("producto", { producto, usuario });
   } catch (err) {
     res.status(500).send({ err });
+  }
+});
+
+router.get("/producto/:id/editar", async (req, res) => {
+  if (!req.session.usuario || !req.session.usuario.admin) {
+    return res.status(403).send("No tienes permisos para editar productos!!");
+  } else {
+    try {
+      const { id } = req.params;
+      const producto = await Productos.findById(id);
+
+      if (!producto) {
+        return res.status(404).send("Producto no encontrado");
+      }
+
+      res.render("editar_producto", { producto });
+    } catch (err) {
+      if (err.name === "ValidationError") {
+        res.status(400).send({ error: err.message });
+      }
+      res
+        .status(500)
+        .send({
+          error: "Error al cargar el producto para editar",
+          detalle: err,
+        });
+    }
+  }
+});
+
+router.post("/producto/:id/editar", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, price } = req.body;
+
+    const producto = await Productos.findByIdAndUpdate(
+      id,
+      { title, price },
+      { new: true, runValidators: true }
+    );
+
+    if (!producto) {
+      return res.status(404).send("Producto no encontrado");
+    }
+
+    res.redirect("/producto/" + id);
+  } catch (err) {
+    res
+      .status(500)
+      .send({ error: "Error al actualizar el producto", detalle: err });
   }
 });
 
@@ -85,11 +134,8 @@ router.get("/carrito", async (req, res) => {
   const productos = req.session.carrito || [];
   const total = productos.reduce((sum, product) => sum + product.price, 0);
 
-  console.log("Cart content:", productos);
-  console.log("Total:", total);
-
   const prodCatsPromise = await Productos.find({});
-  const categorias = [ //ensoures no duplicates in categories and no categories lost
+  const categorias = [
     ...new Set(prodCatsPromise.map((product) => product.category)),
   ];
 
@@ -104,18 +150,16 @@ router.post("/agregar-producto", async (req, res) => {
       req.session.carrito = [];
     }
     req.session.carrito.push(producto);
-    console.log("Carrito al agregar: ", req.session.carrito);
     res.redirect("/carrito");
   } catch (err) {
     res.status(500).send({ err });
   }
 });
 
-//this is for knowing the carrito length and if it is empty or not
-router.get('/api/carrito', (req, res) => {
+//endpoint para traerme el carrito si lo necesitara (un json)
+router.get("/api/carrito", (req, res) => {
   const productos = req.session.carrito || [];
   res.json(productos);
 });
-
 
 export default router;

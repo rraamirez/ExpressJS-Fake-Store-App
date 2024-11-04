@@ -38,3 +38,10 @@ window.onload = function() {
   }
 }
 
+function redirectToLogin() {
+  window.location.href = '/login';
+}
+
+function redirectToLogout() {
+  window.location.href = '/logout';
+}
