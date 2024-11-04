@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// Schema
 const UsuariosSchema = new mongoose.Schema({
   "address": {
     "geolocation": {
@@ -69,6 +68,5 @@ const UsuariosSchema = new mongoose.Schema({
   }
 });
 
-// Modelo
 const Usuarios = mongoose.model("usuarios", UsuariosSchema);
 export default Usuarios;

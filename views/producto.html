@@ -40,7 +40,7 @@
           </h4>
           <div class="d-flex">
             {% if usuario and usuario.admin %}
-              <a href="/producto/{{ producto._id }}/editar" class="btn btn-warning btn-sm mr-2">Editar Producto</a>
+              <a href="/producto/{{ producto._id }}/editar" class="btn btn-warning btn-sm mr-2">Edit Product</a>
             {% endif %}
             <form action="/agregar-producto" method="POST">
               <input type="hidden" name="id" value="{{ producto._id }}" />

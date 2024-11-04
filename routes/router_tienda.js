@@ -74,7 +74,11 @@ router.get("/producto/:id", async (req, res) => {
   try {
     const usuario = req.session.usuario || null;
     const producto = await Productos.findById(id);
-    res.render("producto", { producto, usuario });
+    
+    const categoriasArray = await Productos.find({}).distinct("category"); //hecho con el método distinct de mongoose por sugerencia del profesor
+    const categorias = new Set(categoriasArray); 
+
+    res.render("producto", { producto, usuario, categorias });
   } catch (err) {
     res.status(500).send({ err });
   }
@@ -124,9 +128,7 @@ router.post("/producto/:id/editar", async (req, res) => {
 
     res.redirect("/producto/" + id);
   } catch (err) {
-    res
-      .status(500)
-      .send({ error: "Error al actualizar el producto", detalle: err });
+    res.status(500).send({ error: "Error al actualizar el producto", detalle: err });
   }
 });
 

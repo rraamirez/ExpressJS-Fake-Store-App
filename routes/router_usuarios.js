@@ -4,7 +4,8 @@ import Usuarios from "../model/usuarios.js";
 const router = express.Router();
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  const error = req.query.error === '401'; // asi puedo si mi post devuelve error=401 puedo llevarlo a la vista
+  res.render("login", { error });
 });
 
 router.post("/login", async (req, res) => {
@@ -25,18 +26,22 @@ router.post("/login", async (req, res) => {
       secure: process.env.IN === 'production' 
     }).redirect("/");
   } else {
-    res.redirect("/login?error=1"); 
+    res.redirect("/login?error=401"); 
   }
 });
 
 async function verificarUsuario(username, password) {
-  console.log("verificarUsuario", username, password);
   const usuario = await Usuarios.findOne({ username: username, password: password });
-  return usuario ? { username: usuario.username, admin: usuario.admin } : null; 
+  if (usuario) {
+    return { username: usuario.username, admin: usuario.admin };
+  } else {
+    return null; 
+  }
 }
 
+
 router.get("/logout", (req, res) => {
-  req.session.destroy(); //asi libramos todo
+  req.session.destroy(); //asi me borro todo lo que haya en las sesiones
   res.clearCookie("access_token"); 
   res.redirect("/");
 });
