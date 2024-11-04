@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Product Details{% endblock %} {%
-block content %}
+{% extends "base.html" %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block content %}
 <style>
   .styled-hr {
     border: none;
@@ -18,6 +21,7 @@ block content %}
     margin: 20px 0;
   }
 </style>
+
 <div class="row justify-content-center">
   <div class="col-md-10 mb-2">
     <div class="row">
@@ -34,10 +38,15 @@ block content %}
           <h4 class="font-weight-bold text-success mb-0">
             Price: {{ producto.price }} €
           </h4>
-          <form action="/agregar-producto" method="POST">
-            <input type="hidden" name="id" value="{{ producto._id }}" />
-            <button class="btn btn-primary btn-sm ml-2">Add to cart</button>
-          </form>
+          <div class="d-flex">
+            {% if usuario and usuario.admin %}
+              <a href="/producto/{{ producto._id }}/editar" class="btn btn-warning btn-sm mr-2">Editar Producto</a>
+            {% endif %}
+            <form action="/agregar-producto" method="POST">
+              <input type="hidden" name="id" value="{{ producto._id }}" />
+              <button class="btn btn-primary btn-sm">Add to cart</button>
+            </form>
+          </div>
         </div>
         <hr class="styled-hr" />
         <div>
@@ -51,4 +60,5 @@ block content %}
     </div>
   </div>
 </div>
+
 {% endblock %}
