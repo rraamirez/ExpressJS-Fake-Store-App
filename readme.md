@@ -18,8 +18,7 @@ Puntos a destacar:
 
         Control de errores: Es esencial el control de errores en una api rest, por lo que se ha hecho una lógica con try catch para poder capturarlos.
 
-    Testeo -> se ha creado un archivo test-api.http para probar las peticiones mediante el uso de 
-                una extensión de vscode.
+    Testeo -> se ha creado un archivo test-api.http en ./routes/test/test-api.http para probar las peticiones mediante el uso de una extensión de vscode.
 
     Info adicional de testeo: Si no usas vscode, siempre puedes usar la herramienta postman para probar los endpoint. En caso de usar una api mas compleja, recomiendo leer este tutorial de uso de swagger que aportaría muchos beneficios:  https://medium.com/@italo.ravina/a%C3%B1adir-documentaci%C3%B3n-con-swagger-a-un-api-creada-en-express-5c4c5c3cb19e
 
