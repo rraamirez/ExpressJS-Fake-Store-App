@@ -1,0 +1,18 @@
+### Obtener todas las valoraciones de productos
+GET http://localhost:8000/api/ratings/
+
+
+### Obtener valoración de un producto específico 
+GET http://localhost:8000/api/ratings/66f834692c0e37e31dd942b6
+
+###
+
+PUT http://localhost:8000/api/ratings/66f834692c0e37e31dd942b6
+Content-Type: application/json
+
+#el body es un json con los campos que se quieren actualizar
+{
+  "rating": 3,
+  "count": 2000
+}
+
