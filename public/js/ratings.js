@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const response = await fetch(`/api/ratings/${ide}`);
       if (!response.ok) {
-        console.error(`Error fetching rating to ${ide}: ${response.status}`);
+        console.error(`Error llamando a la api para ${ide}: ${response.status}`);
         continue;
       }
 
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(ele_hijo);
       }
     } catch (error) {
-      console.error(`Error processing rating for ${ide}:`, error);
+      console.error(`Error en el domcontentloadded para:  ${ide}:`, error);
     }
   }
 });
@@ -32,7 +32,6 @@ function generarHTMLConEstrellas(rating, ide) {
   //hacer media, pero a modo de demostración de ver cómo se ha hecho el frontend 
   //el rating rate actualizará con un sólo voto
   const stars = Math.round(rating.rate); 
-  const id = ide;
   let html = "";
 
   /*
@@ -58,7 +57,7 @@ async function Vota(evt) {
   try {
     const response = await fetch(`/api/ratings/${ide}`);
     if (!response.ok) {
-      console.error(`Error fetching rating for ${ide}: ${response.status}`);
+      console.error(`Error en la llamada a la api para:  ${ide}: ${response.status}`);
       return;
     }
     const { rating } = await response.json();
@@ -73,7 +72,7 @@ async function Vota(evt) {
       }),
     });
 
-    vote.ok ? location.reload() : console.error("There was an error voting :(");
+    vote.ok ? location.reload() : console.error("No se pudo votar o al menos la api no responde :(");
   
   } catch (error) {
     console.error(error);

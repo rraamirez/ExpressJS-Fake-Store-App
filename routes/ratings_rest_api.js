@@ -34,10 +34,10 @@ router.get("/api/ratings/:id", async (req, res) => {
     } else {
       res.status(404).send("Product not found");
     }
-    } catch (err) {
+  } catch (err) {
     logger.error("Error fetching rating", err);
     res.status(500).send({ err });
-    }
+  }
 });
 
 router.put("/api/ratings/:id", async (req, res) => {
@@ -65,7 +65,7 @@ router.put("/api/ratings/:id", async (req, res) => {
       res.status(404).send("Product not found");
     }
   } catch (err) {
-    logger.error("Error updating rating", err);
+    logger.error("Error updating the rating", err);
     res.status(500).send({ err });
   }
 });
