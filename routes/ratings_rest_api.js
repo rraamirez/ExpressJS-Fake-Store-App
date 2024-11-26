@@ -43,6 +43,13 @@ router.get("/api/ratings/:id", async (req, res) => {
 router.put("/api/ratings/:id", async (req, res) => {
   const { id } = req.params;
   const { rating, count } = req.body;
+
+  //añadido en la p5, se me hizo esencial comprobar si realmente era un numero o no
+  //para poder actualizar bien la base de datos
+  if (typeof rating !== "number" || typeof count !== "number") {
+    return res.status(400).send("Invalid rating or count");
+  }
+
   try {
     logger.info(`Updating rating for product: ${id}`);
     const producto = await Productos.findById(id);

@@ -12,31 +12,39 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       const { rating } = await response.json();
-      const html_nuevo_con_las_estrellas = generarHTMLConEstrellas(rating);
+      const html_nuevo_con_las_estrellas = generarHTMLConEstrellas(rating, ide);
       ele.innerHTML = html_nuevo_con_las_estrellas;
 
-      for (const ele_hijo of ele.children) {      // ele.children es un iterable
+      for (const ele_hijo of ele.children) {
+        // ele.children es un iterable
         // elemento con estrella
-        ele_hijo.addEventListener('click', Vota)
-        console.log(ele_hijo)
-      } 
-    
+        ele_hijo.addEventListener("click", Vota);
+        console.log(ele_hijo);
+      }
     } catch (error) {
       console.error(`Error processing rating for ${ide}:`, error);
     }
   }
 });
 
-function generarHTMLConEstrellas(rating) {
-  const stars = Math.round(rating.rate);
+function generarHTMLConEstrellas(rating, ide) {
+  //Evidentemente esto no es realista porque lo ideal sería
+  //hacer media, pero a modo de demostración de ver cómo se ha hecho el frontend 
+  //el rating rate actualizará con un sólo voto
+  const stars = Math.round(rating.rate); 
+  const id = ide;
   let html = "";
 
-  for (let i = 0; i < stars; i++) {
-    html += '<span class="fa fa-star checked"></span>';
+  /*
+  ES MUY IMPORTANTE AÑADIR EL ID EN LOS SPAN, SINO NO PODREMOS HACER LA LLAMADA A LA API BIEN
+  */
+
+  for (let i = 1; i <= stars; i++) {
+    html += `<span class="fa fa-star checked" data-star="${i}" data-_id="${ide}"></span>`;
   }
 
-  for (let i = stars; i < 5; i++) {
-    html += '<span class="fa fa-star"></span>';
+  for (let i = stars + 1; i <= 5; i++) {
+    html += `<span class="fa fa-star" data-star="${i}" data-_id="${ide}"></span>`;
   }
 
   html += ` <span>(${rating.count} Opinions)</span>`;
@@ -45,27 +53,29 @@ function generarHTMLConEstrellas(rating) {
 
 async function Vota(evt) {
   const ide = evt.target.dataset._id;
-  const pun = evt.target.dataset.star;
-  console.log(ide);
-  console.log(pun);
+  const pun = parseInt(evt.target.dataset.star, 10);
 
   try {
     const response = await fetch(`/api/ratings/${ide}`);
     if (!response.ok) {
-        console.error(`Error fetching rating to ${ide}: ${response.status}`);
+      console.error(`Error fetching rating for ${ide}: ${response.status}`);
+      return;
     }
     const { rating } = await response.json();
     const count = rating.count + 1;
-    
-    
-    await fetch(`/api/ratings/${ide}`, {
+
+    const vote = await fetch(`/api/ratings/${ide}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pun, count }),
+      body: JSON.stringify({ // importante pasar a int para poder hacer la petición
+        rating: parseInt(pun, 10),
+        count: parseInt(count, 10),
+      }),
     });
+
+    vote.ok ? location.reload() : console.error("There was an error voting :(");
+  
   } catch (error) {
     console.error(error);
   }
 }
-
-
