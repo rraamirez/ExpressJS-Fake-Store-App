@@ -16,8 +16,6 @@ data/
 .DS_Store
 Thumbs.db
 
-# Ignorar archivos de entorno
-.env
 
 # Ignorar dependencias instaladas
 node_modules/
