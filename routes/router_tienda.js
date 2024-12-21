@@ -54,10 +54,10 @@ router.post("/productos", async (req, res) => {
   const searchTerm = req.body.search || "";
   try {
     logger.info(`Searching products with term (POST): ${searchTerm}`);
-    const productosPromise = Productos.find({
+    const productosPromise = await Productos.find({
       title: { $regex: searchTerm, $options: "i" },
     });
-    const prodCatsPromise = Productos.find({});
+    const prodCatsPromise = await Productos.find({});
     const [productos, prodCats] = await Promise.all([
       productosPromise,
       prodCatsPromise,

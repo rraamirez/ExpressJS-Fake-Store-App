@@ -1,0 +1,38 @@
+services:
+  tienda:
+    build: .
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    environment:
+      USER_DB: root
+      PASS: example
+      DB_HOST: mongo  
+      SECRET_KEY: "dai"
+    ports:
+      - "8000:8000"  
+
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"   
+      - "443:443"
+    volumes:
+      - caddy-config:/config
+      - caddy-data:/data
+      - ./Caddyfile:/etc/caddy/Caddyfile  
+      - ./public:/usr/share/caddy
+
+volumes:
+  caddy-config:
+  caddy-data:
