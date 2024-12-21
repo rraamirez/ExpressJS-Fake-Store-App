@@ -4,8 +4,7 @@ ENV NODE_ENV=production
 ENV USER_DB=root
 ENV PASS=example
 ENV SECRET_KEY="dai"
-# ENV DB_HOST=host.docker.internal
-ENV DB_HOST: locahost
+ENV DB_HOST=host.docker.internal
 ENV buildTag=1.0
 
 WORKDIR /usr/src/app
