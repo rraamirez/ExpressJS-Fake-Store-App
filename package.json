@@ -21,7 +21,8 @@
     "mongoose": "^8.7.0",
     "node-fetch": "^3.3.2",
     "nunjucks": "^3.2.4",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/node": "^22.7.4"

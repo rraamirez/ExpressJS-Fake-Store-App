@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const USER_DB = process.env.USER_DB
 const PASS    = process.env.PASS
-const url = `mongodb://${USER_DB}:${PASS}@${process.env.DB_HOST}:27017/myProject?authSource=admin`; 
+const url = `mongodb://${USER_DB}:${PASS}@localhost:27017/myProject?authSource=admin`; 
 
 //Connecting to mongodb
 
