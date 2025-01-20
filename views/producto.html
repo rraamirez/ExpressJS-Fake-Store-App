@@ -40,7 +40,7 @@
           </h4>
           <div class="d-flex">
             {% if usuario and usuario.admin %}
-              <a href="/producto/{{ producto._id }}/editar" class="btn btn-warning btn-sm mr-2">Editar Producto</a>
+              <a href="/producto/{{ producto._id }}/editar" class="btn btn-warning btn-sm mr-2">Edit Product</a>
             {% endif %}
             <form action="/agregar-producto" method="POST">
               <input type="hidden" name="id" value="{{ producto._id }}" />
@@ -49,6 +49,9 @@
           </div>
         </div>
         <hr class="styled-hr" />
+        <span class="stars" data-_id="{{producto._id}}"> 
+          Aqui irá el rating de {{producto._id}}
+        </span>
         <div>
           <h2 class="card-title">{{ producto.title }}</h2>
           <h5 class="card-subtitle text-muted">

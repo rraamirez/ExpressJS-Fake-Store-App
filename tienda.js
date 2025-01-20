@@ -4,12 +4,23 @@ import session from "express-session";
 import cookieParser from "cookie-parser"; // Importar cookie-parser
 import connectDB from "./model/db.js";
 import jwt from "jsonwebtoken";
+import winston from "winston";
+
 
 connectDB();
 
 const app = express();
 
 const IN = process.env.IN || 'development';
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [new winston.transports.Console()],
+});
+export { logger };
+
+
 
 // Configuración de Nunjucks
 nunjucks.configure('views', {         // directorio 'views' para las plantillas html
@@ -56,6 +67,8 @@ const autenticacion = (req, res, next) => {
 };
 app.use(autenticacion); // Usar el middleware de autenticación
 
+app.use(express.json()); // Para poder leer req.body en formato JSON
+
 // Ruta de prueba para el servidor
 app.get("/hola", (req, res) => {
   res.send('Hola desde el servidor de tienda!');
@@ -67,6 +80,9 @@ app.use("/", TiendaRouter);
 
 import UsuariosRouter from "./routes/router_usuarios.js";
 app.use("/", UsuariosRouter);
+
+import RatingsRestApi from "./routes/ratings_rest_api.js";
+app.use("/", RatingsRestApi);
 
 // Iniciar el servidor
 const PORT = process.env.PORT || 8000;

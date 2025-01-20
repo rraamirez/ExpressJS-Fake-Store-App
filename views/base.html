@@ -12,6 +12,7 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>{% block title %}{% endblock %} - My Webpage</title>
     <style>
       html,
@@ -25,6 +26,9 @@
       }
       main {
         flex: 1;
+      }
+      .checked {
+        color: orange
       }
     </style>
     {% endblock %}
@@ -100,6 +104,7 @@
       {% block footer %} &copy; Copyright 2024 by Raul. {% endblock %}
     </footer>
     <script src="/js/baseScripts.js"></script>
+    <script src="/js/ratings.js"></script>
     {% block scripts %} {% endblock %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
