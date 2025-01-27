@@ -3,7 +3,7 @@ services:
     image: mongo
     restart: unless-stopped
     volumes:
-      - ./data:/data/db  # Asegúrate de que la carpeta 'data' exista o ajusta la ruta
+      - ./data:/data/db  
     ports:
       - 27017:27017
     environment:
@@ -21,4 +21,4 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-      ME_CONFIG_BASICAUTH: 'false'  # Asegúrate de que 'false' esté entre comillas para evitar errores de tipo
+      ME_CONFIG_BASICAUTH: 'false' 
